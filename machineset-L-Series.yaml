@@ -1,0 +1,59 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  labels:
+    machine.openshift.io/cluster-api-cluster: cluster2-fk6b9
+    machine.openshift.io/cluster-api-machine-role: worker
+    machine.openshift.io/cluster-api-machine-type: worker
+  name: cluster2-fk6b9-worker-westus25
+  namespace: openshift-machine-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: cluster2-fk6b9
+      machine.openshift.io/cluster-api-machineset: cluster2-fk6b9-worker-westus25
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        machine.openshift.io/cluster-api-cluster: cluster2-fk6b9
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: cluster2-fk6b9-worker-westus25 
+    spec:
+      metadata:
+        creationTimestamp: null
+        labels:
+          node-role.kubernetes.io/worker: ""
+      providerSpec:
+        value:
+          apiVersion: azureproviderconfig.openshift.io/v1beta1
+          credentialsSecret:
+            name: azure-cloud-credentials
+            namespace: openshift-machine-api
+          image:
+            offer: aro4
+            publisher: azureopenshift
+            resourceID: 
+            sku: aro_47
+            version: 47.83.20210325 
+          kind: AzureMachineProviderSpec
+          location: westus2
+          metadata:
+            creationTimestamp: null
+          networkResourceGroup: weinongw-westus2
+          osDisk:
+            diskSizeGB: 128
+            managedDisk:
+              storageAccountType: Premium_LRS
+            osType: Linux
+          publicIP: false
+          publicLoadBalancer: cluster2-fk6b9
+          resourceGroup: aro-d8ktmc0u
+          subnet: worker-subnet   
+          userDataSecret:
+            name: worker-user-data 
+          vmSize: Standard_L8s_v2
+          vnet: aro-vnet-2 
+          zone: "1" 

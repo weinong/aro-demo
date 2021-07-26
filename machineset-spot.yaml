@@ -1,0 +1,60 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  labels:
+    machine.openshift.io/cluster-api-cluster: demo-9ww2t
+    machine.openshift.io/cluster-api-machine-role: worker
+    machine.openshift.io/cluster-api-machine-type: worker
+  name: demo-9ww2t-worker-spot
+  namespace: openshift-machine-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: demo-9ww2t
+      machine.openshift.io/cluster-api-machineset: demo-9ww2t-worker-spot
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        machine.openshift.io/cluster-api-cluster: demo-9ww2t
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: demo-9ww2t-worker-spot 
+    spec:
+      metadata:
+        creationTimestamp: null
+        labels:
+          node-role.kubernetes.io/worker: ""
+      providerSpec:
+        value:
+          spotVMOptions: {}
+          apiVersion: azureproviderconfig.openshift.io/v1beta1
+          credentialsSecret:
+            name: azure-cloud-credentials
+            namespace: openshift-machine-api
+          image:
+            offer: aro4
+            publisher: azureopenshift
+            resourceID: 
+            sku: aro_47
+            version: 47.83.20210325 
+          kind: AzureMachineProviderSpec
+          location: eastus2
+          metadata:
+            creationTimestamp: null
+          networkResourceGroup: weinongw-devbox
+          osDisk:
+            diskSizeGB: 128
+            managedDisk:
+              storageAccountType: Premium_LRS
+            osType: Linux
+          publicIP: false
+          publicLoadBalancer: demo-9ww2t
+          resourceGroup: aro-vvmg0aes
+          subnet: worker-subnet   
+          userDataSecret:
+            name: worker-user-data 
+          vmSize: Standard_D4s_v3
+          vnet: aro-vnet
+          zone: "1" 

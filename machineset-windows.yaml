@@ -1,0 +1,60 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  labels:
+    machine.openshift.io/cluster-api-cluster: cluster2-fk6b9
+    machine.openshift.io/cluster-api-machine-role: worker
+    machine.openshift.io/cluster-api-machine-type: worker
+  name: cluster2-fk6b9-worker-windows-westus21
+  namespace: openshift-machine-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: cluster2-fk6b9
+      machine.openshift.io/cluster-api-machineset: cluster2-fk6b9-worker-windows-westus21
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        machine.openshift.io/cluster-api-cluster: cluster2-fk6b9
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: cluster2-fk6b9-worker-windows-westus21
+        machine.openshift.io/os-id: Windows
+    spec:
+      metadata:
+        creationTimestamp: null
+        labels:
+          node-role.kubernetes.io/worker: ""
+      providerSpec:
+        value:
+          apiVersion: azureproviderconfig.openshift.io/v1beta1
+          credentialsSecret:
+            name: azure-cloud-credentials
+            namespace: openshift-machine-api
+          image:
+            offer: WindowsServer
+            publisher: MicrosoftWindowsServer
+            resourceID: 
+            sku: 2019-Datacenter-with-Containers
+            version: latest
+          kind: AzureMachineProviderSpec
+          location: westus2
+          metadata:
+            creationTimestamp: null
+          networkResourceGroup: weinongw-westus2
+          osDisk:
+            diskSizeGB: 128
+            managedDisk:
+              storageAccountType: Premium_LRS
+            osType: Windows
+          publicIP: false
+          publicLoadBalancer: cluster2-fk6b9
+          resourceGroup: aro-d8ktmc0u
+          subnet: worker-subnet   
+          userDataSecret:
+            name: windows-user-data 
+          vmSize: Standard_D2s_v3
+          vnet: aro-vnet-2 
+          zone: "1" 
