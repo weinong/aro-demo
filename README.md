@@ -6,3 +6,6 @@ Demo repo for Azure Red Hat OpenShift
 3. scale out
 4. add machine set
 5. add spot machine set
+
+Learn about Azure Red Hat OpenShift
+https://docs.microsoft.com/en-us/azure/openshift/
